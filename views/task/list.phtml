@@ -1,0 +1,83 @@
+<h3><?php echo $page_title; ?> <span class="badge badge-secondary"><?= $tasks_num ;?></span> <a class="btn btn-success btn-sm" href="/task/create" role="button"><i class="fa fa-plus" aria-hidden="true"></i> добавить задачу</a> </h3>
+
+<br>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th width="450">Задача <a href="/task/list/page/<?=$page;?>/order/title-asc"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i></a>  <a href="/task/list/page/<?=$page;?>/order/title-desc"><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></a></th>
+      <th>Автор  <a href="/task/list/page/<?=$page;?>/order/user-asc"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i></a>  <a href="/task/list/page/<?=$page;?>/order/user-desc"><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></a></th>
+      <th>Создана <a href="/task/list/page/<?=$page;?>/order/create-asc"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i></a>  <a href="/task/list/page/<?=$page;?>/order/create-desc"><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></a></th>
+      <th>Обновлена <a href="/task/list/page/<?=$page;?>/order/update-asc"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i></a>  <a href="/task/list/page/<?=$page;?>/order/update-desc"><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></a></th>
+      <th>Выполнена <a href="/task/list/page/<?=$page;?>/order/closed-asc"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i></a>  <a href="/task/list/page/<?=$page;?>/order/closed-desc"><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></a></th>
+
+      <?php if($is_admin) : ?>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <?php endif; ?>
+
+    </tr>
+  </thead>
+  <tbody>
+    
+	<?php foreach ($tasks as $task) : ?>
+
+      <?php if($task['status']) : ?>
+      <tr class="table-success">
+      <?php else : ?>
+      <tr>
+      <?php endif; ?>
+    
+      <th scope="row"><?= $task['id'] ?></th>
+      <td>
+            <?php if($task['status']) : ?>
+      	<strong><del><a href="/task/view/<?= $task['id'] ?>"><?= $task['title'] ?></a></del></strong>
+            <?php else : ?>
+            <strong><a href="/task/view/<?= $task['id'] ?>"><?= $task['title'] ?></a></strong>
+            <?php endif; ?>
+
+      </td>
+      <td>@<?= $task['user']; ?></td>
+      <td><small><?= $task['create']; ?></small></td>
+      <td><small><?= $task['update']; ?></small></td>
+      <td><small><?= (strtotime($task['closed']) > 0) ? $task['closed'] : ""; ?></small></td>
+
+      <?php if($is_admin) : ?>
+      <td><a href="/task/edit/<?= $task['id'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+      <td><a href="/task/delete/<?= $task['id'] ?>"><i class="fa fa-remove" aria-hidden="true"></i></a></td>
+      <?php endif; ?>
+
+    </tr>
+	<?php endforeach ?>
+
+
+  </tbody>
+
+
+</table>
+
+<?php if($pages_num > 1) : ?>
+
+<nav aria-label="page navigation">
+  <ul class="pagination">
+
+  <!-- <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li> -->
+
+  <?php for($i = 1; $i <= $pages_num; $i++) : ?>
+  
+    <?php $active_class = ($i === $page) ? 'active' : ''; ?>
+    
+    <li class="page-item <?= $active_class; ?>"><a class="page-link" href="/task/list/page/<?=$i;?>/order/<?=$order;?>"><?=$i;?></a></li>
+  
+  <?php endfor ?>
+
+  <!-- <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li> -->
+
+  </ul>
+</nav>
+
+<?php endif ?>
+
+
+

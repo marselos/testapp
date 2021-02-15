@@ -1,0 +1,29 @@
+<a class="btn btn-outline-primary btn-sm" href="/task/list" role="button"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> к списку задач</a>
+<br><br>
+<h3><?php echo $page_title; ?></h3>
+
+<br>
+
+<?php if(!empty($error) && $error === "notauth") : ?>
+<div class="alert alert-danger" role="alert">
+	Неверное имя пользователя или пароль
+</div>
+<?php endif; ?>
+
+<form action="<?= $url; ?>" method="post">
+	
+	<div class="form-row">	
+		<div class="form-group col-md-3">
+			<label for="input_user">Имя пользователя</label>
+			<input type="text" class="form-control" id="input_user" name="input_user" placeholder="Имя пользователя" required>
+		</div>
+
+		<div class="form-group col-md-3">
+			<label for="input_password">Пароль</label>
+			<input type="password" class="form-control" id="input_password" name="input_password" placeholder="Пароль" required>
+		</div>
+	</div>
+
+	<button type="submit" class="btn btn-primary">Войти</button>
+
+</form>

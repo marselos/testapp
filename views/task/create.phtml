@@ -1,0 +1,126 @@
+<a class="btn btn-outline-primary btn-sm" href="/task/list" role="button"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> к списку задач</a> 
+<br><br>
+
+<h3><?php echo $page_title; ?></h3>
+<br>
+
+<form action="<?= $url; ?>" method="post" class="container" id="needs-validation" novalidate enctype="multipart/form-data">
+	<div class="form-group">
+		<label for="input_title">Заголовок задачи</label>
+		<input type="text" class="form-control" id="input_title" name="input_title" aria-describedby="help_title" placeholder="Заголовок" required>
+		<small id="help_title" class="form-text text-muted">Название, которое отображается в общем списке задач</small>
+		<div class="invalid-feedback">
+			Укажите заголовок задачи
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="form-group col-md-6">
+			<label for="input_email">Email</label>
+			<input type="email" class="form-control" id="input_email" name="input_email" placeholder="name@example.com" required>
+			<div class="invalid-feedback">
+				Укажите свой email
+			</div>
+		</div>
+
+		<div class="form-group col-md-6">
+			<label for="input_user">Ваш юзернейм</label>
+
+			<div class="input-group mb-2 mb-sm-0">
+				<div class="input-group-addon">@</div>
+				<input type="text" class="form-control" id="input_user" name="input_user" aria-describedby="help_user"  placeholder="username" required>
+			</div>
+			<div class="invalid-feedback">
+				Укажите имя пользователя
+			</div>
+			<small id="help_user" class="form-text text-muted">Ваше имя пользователя в системе</small>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="input_content">Текст задачи</label>
+		<textarea class="form-control" id="input_content" name="input_content" placeholder="Полное описание задачи" rows=7></textarea>
+	</div>
+
+	<div class="form-group">
+		<label for="input_img">Загрузка изображения</label>
+		<input name="input_img" type="file" class="form-control-file" id="input_img"  accept="image/*">
+
+		<br><p><img id="input_preview_img" src="#" /></p>
+	</div>
+
+	<button type="submit" class="btn btn-primary">Создать задачу</button> <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#task-preview">Предпросмотр</button>
+
+</form>
+
+<!-- ************************************************* -->
+<!-- Task Preview Modal -->
+<!-- ************************************************* -->
+<div class="modal fade" id="task-preview" tabindex="-1" role="dialog" aria-labelledby="taskPreview" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Предпросмотр задачи</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+	
+		<h3 id="task-preview-title"></h3>
+		<p>
+			<span class="badge badge-light">
+				<i class="fa fa-clock-o" aria-hidden="true"></i> создана  <span id="task-preview-date-create"></span>
+			</span>
+			
+			<span class="badge badge-light">
+				<i class="fa fa-user-circle-o" aria-hidden="true"></i> <span id="task-preview-user"></span>
+			</span>
+			
+			<span class="badge badge-light" id="task-preview-email"></span>
+		</p>
+
+		<p><img id="task-preview-img" src="#" /></p>
+
+		<p id="task-preview-content"></p>
+      </div>
+
+      <div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- ************************************************* -->
+
+
+<script>
+
+(function() {
+
+"use strict";
+
+window.addEventListener("load", function() {
+	
+	var form = document.getElementById("needs-validation");
+	
+	form.addEventListener("submit", function(event) {
+
+		if (form.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+		
+		form.classList.add("was-validated");
+
+	}, false);
+
+}, false);
+
+
+}());
+</script>
+

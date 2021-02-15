@@ -1,0 +1,105 @@
+<!--
+ * Author: =={{ *** MARSEL ALAMDAR *** }}==
+ * Date: 28/08/2017
+ * Test APP For BeeJee
+ *
+ * -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+	<title>task.app – <?= $title ?></title>
+	<meta content="<?= $description ?>" name="description"/>
+	<meta content="Marsel Alamdar" name="author">
+
+	<!-- *** BOOTSTRAP *** -->
+	<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" rel="stylesheet"></link>
+	<link href="/css/style.css" rel="stylesheet"></link>
+
+	<script src="https://use.fontawesome.com/57b2fc3815.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+
+	<div class="header clearfix">
+            <nav>
+			<ul class="nav nav-pills float-right">
+				
+				
+
+                  	<li class="nav-item"><a class="nav-link" href="/task/list">Список задач</a></li>
+                  	<li class="nav-item"><a class="nav-link" href="/task/create">Добавить задачу</a></li>
+				
+				<?php if(isset($_SESSION['auth']) && $_SESSION['auth']) : ?>
+					<li class="nav-item"><a class="nav-link" href="/user/logout">Выйти</a></li>
+				<?php else : ?>
+                        	<li class="nav-item"><a class="nav-link" href="/user/login">Войти</a></li>
+				<?php endif; ?>
+
+			</ul>
+            </nav>
+            
+            <h3 class="text-muted"><a href="/">task.app</a>
+
+			<?php if(isset($_SESSION['auth']) && $_SESSION['auth']) : ?>
+				<span class="badge badge-warning">GOD MODE</span>
+			<?php endif; ?>
+
+            </h3>
+            
+	</div>
+
+      <div class="row marketing">
+	      <div class="col-lg-12">
+			
+			<?php $this->controller->renderView(); // renders the current view into the template ?>
+
+		</div>
+	</div>
+      
+	<footer class="footer"><p>© MARSELOS 2017</p></footer>
+
+</div>
+
+<script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+<script>
+$( document ).ready(function() {
+
+	// Task Preview Modal
+	$('#task-preview').on('shown.bs.modal', function (e) {
+		$('#task-preview-title').html($("#input_title").val());
+		$('#task-preview-user').html($("#input_user").val());
+		$('#task-preview-email').html($("#input_email").val());
+		$('#task-preview-content').html($("#input_content").val().replace(/\n/g,"<br>"));
+		$('#task-preview-img').attr('src', $('#input_preview_img').attr('src')).attr('width', '320').attr('height', '240');
+	});
+
+	function readURL(input) {
+
+	    if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+
+	        reader.onload = function (e) {
+	            $('#input_preview_img').attr('src', e.target.result).attr('width', '320').attr('height', '240');
+	        };
+
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
+
+	$("#input_img").change(function(){
+	    readURL(this);
+	});
+
+});
+</script>
+
+</body>
+</html>
